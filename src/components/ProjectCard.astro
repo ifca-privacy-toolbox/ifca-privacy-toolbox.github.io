@@ -1,0 +1,74 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  url?: string;
+  tools: Array<'anjana' | 'pycanon' | 'trasgodp'>;
+  funder?: string;
+}
+
+const { name, description, url, tools, funder } = Astro.props;
+
+const toolLabelMap = {
+  anjana: 'anjana',
+  pycanon: 'pyCANON',
+  trasgodp: 'trasgoDP',
+} as const;
+---
+
+<article class="project-card">
+  <div class="project-card__head">
+    <h4 class="project-card__name">
+      {url
+        ? <a href={url} target="_blank" rel="noopener">{name} <span aria-hidden="true">↗</span></a>
+        : name
+      }
+    </h4>
+    {funder && <span class="project-card__funder">{funder}</span>}
+  </div>
+  <p class="project-card__desc">{description}</p>
+  <div class="project-card__tools" aria-label="Tools used">
+    {tools.map(t => <span class={`badge badge--${t}`}>{toolLabelMap[t]}</span>)}
+  </div>
+</article>
+
+<style>
+.project-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: box-shadow 0.2s;
+}
+.project-card:hover { box-shadow: var(--shadow-sm); }
+
+.project-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.project-card__name {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.project-card__name a { color: var(--color-accent); }
+.project-card__funder {
+  font-size: 0.75rem;
+  color: var(--color-text-faint);
+}
+.project-card__desc {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+.project-card__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+</style>

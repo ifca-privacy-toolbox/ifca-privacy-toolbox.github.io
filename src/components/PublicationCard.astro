@@ -1,0 +1,61 @@
+---
+interface Props {
+  title: string;
+  authors: string;
+  venue: string;
+  year: number;
+  url?: string;
+}
+
+const { title, authors, venue, year, url } = Astro.props;
+---
+
+<article class="publication-card">
+  <div class="publication-card__head">
+    <h4 class="publication-card__title">
+      {url
+        ? <a href={url} target="_blank" rel="noopener">{title} <span aria-hidden="true">↗</span></a>
+        : title
+      }
+    </h4>
+    <p class="publication-card__authors">{authors}</p>
+  </div>
+  <p class="publication-card__venue">{venue}, {year}</p>
+</article>
+
+<style>
+.publication-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transition: box-shadow 0.2s;
+}
+.publication-card:hover {
+  box-shadow: var(--shadow-sm);
+}
+.publication-card__title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+.publication-card__title a {
+  color: var(--color-text);
+}
+.publication-card__title a:hover {
+  color: var(--color-accent);
+}
+.publication-card__authors {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+.publication-card__venue {
+  font-size: 0.85rem;
+  color: var(--color-text-faint);
+  margin-top: auto;
+}
+</style>

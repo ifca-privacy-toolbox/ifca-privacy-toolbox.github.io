@@ -1,0 +1,359 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'IFCA Privacy Toolbox',
+  description = 'Open-source Python tools for data anonymization, local differential privacy, and privacy risk assessment.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow" />
+
+  <!-- OG -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+
+  <script>
+    ;(() => {
+      try {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored || (prefersDark ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+      } catch (err) {
+        // ignore
+      }
+    })();
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <title>{title}</title>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <header class="nav-wrapper">
+    <nav class="container nav">
+      <a href="/" class="nav__logo">
+        <span class="nav__logo-icon" aria-hidden="true">⬡</span>
+        <span>IFCA Privacy Toolbox</span>
+      </a>
+
+      <ul class="nav__links" role="list">
+        <li class="nav__item nav__item--dropdown">
+          <button class="nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="tools-dropdown">Tools</button>
+          <div id="tools-dropdown" class="nav__dropdown" aria-label="Tool pages">
+            <a href="/anjana">anjana</a>
+            <a href="/pycanon">pyCANON</a>
+            <a href="/trasgoDP">trasgoDP</a>
+          </div>
+        </li>
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#publications">Publications</a></li>
+        <li><a href="/#about">About</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <button id="theme-toggle" class="btn btn--ghost theme-toggle" type="button" aria-label="Switch theme">
+          🌙
+        </button>
+        <a
+          href="https://github.com/IFCA-Advanced-Computing"
+          class="btn btn--ghost"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ── Page content ── -->
+  <main>
+    <slot />
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="footer-wrapper">
+    <div class="container footer">
+      <div class="footer__brand">
+        <span class="nav__logo-icon" aria-hidden="true">⬡</span>
+        <span class="footer__brand-name">IFCA Privacy Toolbox</span>
+        <p class="footer__desc">
+          Open-source privacy tools developed at the
+          <a href="https://ifca.unican.es" target="_blank" rel="noopener">
+            Institute of Physics of Cantabria (IFCA)
+          </a>
+        </p>
+      </div>
+
+      <div class="footer__cols">
+        <div>
+          <p class="footer__col-title">Tools</p>
+          <ul role="list">
+            <li><a href="https://github.com/IFCA-Advanced-Computing/anjana" target="_blank" rel="noopener">anjana</a></li>
+            <li><a href="https://github.com/IFCA-Advanced-Computing/pycanon" target="_blank" rel="noopener">pyCANON</a></li>
+            <li><a href="https://github.com/IFCA-Advanced-Computing/trasgodp" target="_blank" rel="noopener">trasgoDP</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul role="list">
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="https://github.com/IFCA-Advanced-Computing" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Institution</p>
+          <ul role="list">
+            <li><a href="https://ifca.unican.es" target="_blank" rel="noopener">IFCA</a></li>
+            <li><a href="https://www.csic.es" target="_blank" rel="noopener">CSIC</a></li>
+            <li><a href="https://advancedcomputing.ifca.es" target="_blank" rel="noopener">AC&eS Group</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer__bottom">
+      <p>© {new Date().getFullYear()} CSIC — Spanish National Research Council. All rights reserved.</p>
+      <p>
+        <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache 2.0</a>
+        &nbsp;·&nbsp;
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      const root = document.documentElement;
+      let currentTheme = root.dataset.theme || 'light';
+      const setTheme = theme => {
+        currentTheme = theme;
+        root.dataset.theme = theme;
+        localStorage.setItem('theme', theme);
+        themeToggle.innerText = theme === 'dark' ? '☀️' : '🌙';
+        themeToggle.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
+      };
+      setTheme(currentTheme);
+      themeToggle.addEventListener('click', () => setTheme(currentTheme === 'dark' ? 'light' : 'dark'));
+    }
+
+    const dropdownToggle = document.querySelector('.nav__dropdown-toggle');
+    const dropdownItem = document.querySelector('.nav__item--dropdown');
+    const dropdownMenu = document.querySelector('.nav__dropdown');
+
+    if (dropdownToggle && dropdownItem && dropdownMenu) {
+      dropdownToggle.addEventListener('click', event => {
+        event.stopPropagation();
+        const isOpen = dropdownItem.classList.toggle('open');
+        dropdownToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      document.addEventListener('click', event => {
+        if (!dropdownItem.contains(event.target)) {
+          dropdownItem.classList.remove('open');
+          dropdownToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          dropdownItem.classList.remove('open');
+          dropdownToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
+
+<style>
+/* Nav */
+.nav-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 60px;
+}
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.nav__logo-icon {
+  font-size: 1.1rem;
+  color: var(--color-accent);
+}
+.nav__links {
+  display: flex;
+  list-style: none;
+  gap: 1.75rem;
+  margin-inline-start: auto;
+}
+.nav__links a,
+.nav__dropdown-toggle {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  transition: color 0.15s;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+.nav__links a:hover,
+.nav__dropdown-toggle:hover {
+  color: var(--color-text);
+}
+.nav__item--dropdown {
+  position: relative;
+}
+.nav__dropdown {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 0;
+  display: none;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.75rem;
+  box-shadow: var(--shadow-md);
+  min-width: 180px;
+  z-index: 10;
+}
+.nav__item--dropdown:hover .nav__dropdown,
+.nav__item--dropdown:focus-within .nav__dropdown,
+.nav__item--dropdown.open .nav__dropdown {
+  display: flex;
+}
+.nav__dropdown a {
+  color: var(--color-text-muted);
+  padding: 0.35rem 0.45rem;
+  border-radius: 999px;
+}
+.nav__dropdown a:hover {
+  color: var(--color-text);
+  background: var(--color-bg-muted);
+}
+.nav__actions { margin-inline-start: 1.5rem; }
+
+@media (max-width: 640px) {
+  .nav__links { display: none; }
+}
+
+/* Footer */
+.footer-wrapper {
+  background: var(--color-bg-subtle);
+  border-top: 1px solid var(--color-border);
+  padding-block-start: 3rem;
+  margin-top: 4rem;
+}
+.footer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  padding-bottom: 2.5rem;
+}
+.footer__brand {
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.footer__brand-name {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+.footer__desc {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+.footer__desc a {
+  color: var(--color-accent);
+}
+.footer__cols {
+  display: flex;
+  gap: 3rem;
+}
+.footer__col-title {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-faint);
+  margin-bottom: 0.75rem;
+}
+.footer__cols ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.footer__cols a {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  transition: color 0.15s;
+}
+.footer__cols a:hover { color: var(--color-text); }
+.footer__bottom {
+  border-top: 1px solid var(--color-border);
+  padding-block: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-text-faint);
+}
+.footer__bottom a {
+  color: var(--color-text-faint);
+  transition: color 0.15s;
+}
+.footer__bottom a:hover { color: var(--color-text); }
+
+@media (max-width: 768px) {
+  .footer { grid-template-columns: 1fr; }
+  .footer__cols { flex-wrap: wrap; gap: 2rem; }
+}
+</style>

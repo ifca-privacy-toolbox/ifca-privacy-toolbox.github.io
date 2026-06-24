@@ -1,0 +1,319 @@
+/* ── Reset ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  min-height: 100%;
+  background: linear-gradient(to bottom, #ffffff 0%, #d8e8ff 80%);
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ── Tokens ─────────────────────────────────────── */
+:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-bg:          #f8fbff;
+  --color-bg-subtle:   #edf5ff;
+  --color-bg-muted:    #dbeafe;
+
+  --color-text:        #0f172a;
+  --color-text-muted:  #475569;
+  --color-text-faint:  #64748b;
+
+  --color-cta-bg:      var(--color-text);
+  --color-cta-text:    var(--color-bg);
+  --color-cta-border:  rgba(255,255,255,0.28);
+  --color-cta-ghost:   rgba(255,255,255,0.85);
+
+  --color-border:      rgba(15,23,42,0.08);
+  --color-border-strong: rgba(15,23,42,0.16);
+  --color-nav-bg:      rgba(248,251,255,0.92);
+
+  /* accent — blue inspired, privacy feel */
+  --color-accent:      #2563eb;
+  --color-accent-light:#eff6ff;
+  --color-accent-mid:  #1d4ed8;
+
+  /* tool palette */
+  --color-anjana:      #1a6b5c;
+  --color-anjana-light:#e1f5ee;
+  --color-pycanon:     #534ab7;
+  --color-pycanon-light:#eeedfe;
+  --color-trasgodp:    #854f0b;
+  --color-trasgodp-light:#faeeda;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+
+  --max-w: 1100px;
+  --section-py: 5rem;
+}
+
+[data-theme="dark"] {
+  --color-bg:          #071628;
+  --color-bg-subtle:   #0b2150;
+  --color-bg-muted:    #05132e;
+
+  --color-text:        #eff6ff;
+  --color-text-muted:  #cbd5e1;
+  --color-text-faint:  #94a3b8;
+
+  --color-border:      rgba(255,255,255,0.08);
+  --color-border-strong: rgba(255,255,255,0.16);
+  --color-nav-bg:      rgba(10,25,56,0.92);
+
+  --color-accent:      #60a5fa;
+  --color-accent-light:#1e3a8a;
+  --color-accent-mid:  #3b82f6;
+
+  --color-anjana:      #58b79c;
+  --color-anjana-light:#143d35;
+  --color-pycanon:     #8d7ce0;
+  --color-pycanon-light:#2d2a4f;
+  --color-trasgodp:    #d99f5d;
+  --color-trasgodp-light:#3c2f18;
+
+  --color-cta-bg:      var(--color-bg);
+  --color-cta-text:    var(--color-text);
+  --color-cta-border:  rgba(255,255,255,0.25);
+  --color-cta-ghost:   rgba(255,255,255,0.85);
+}
+
+[data-theme="dark"] html,
+[data-theme="dark"] {
+  background: linear-gradient(to bottom, #080810 0%, #0d0a1f 100%);
+}
+
+/* ── Base ────────────────────────────────────────── */
+body {
+  font-family: var(--font-sans);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* ── Layout helpers ──────────────────────────────── */
+.container {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.section {
+  padding-block: var(--section-py);
+}
+
+.section--subtle {
+  background: var(--color-bg-subtle);
+}
+
+/* ── Buttons ─────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn--primary {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+}
+.btn--accent {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.theme-toggle {
+  min-width: 3rem;
+  padding: 0 0.9rem;
+}
+
+/* ── Badge / pill ────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+.badge--anjana   { background: var(--color-anjana-light);   color: var(--color-anjana);   }
+.badge--pycanon  { background: var(--color-pycanon-light);  color: var(--color-pycanon);  }
+.badge--trasgodp { background: var(--color-trasgodp-light); color: var(--color-trasgodp); }
+.badge--neutral  { background: var(--color-bg-muted); color: var(--color-text-muted); }
+
+/* ── Divider ─────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ── Section labels ──────────────────────────────── */
+.label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: 0.5rem;
+}
+.tool-page {
+  display: grid;
+  gap: 2rem;
+}
+
+.tool-hero {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.tool-logo {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  padding: 0.8rem;
+  background: var(--color-bg-subtle);
+}
+
+.tool-title {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  margin: 0.35rem 0 0;
+}
+
+.tool-summary {
+  max-width: 45rem;
+  color: var(--color-text-muted);
+  margin-top: 0.75rem;
+}
+
+.tool-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+}
+
+.tool-card,
+.tool-links-card,
+.tool-example,
+.tool-iframe-card {
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+/* Ensure list bullets inside tool cards are aligned and contained */
+.tool-card ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+  list-style-position: outside;
+}
+.tool-card ul li {
+  margin-bottom: 0.5rem;
+}
+
+.tool-links-card .tool-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.tool-note {
+  margin-top: 0.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.tool-example pre {
+  margin-top: 1rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.tool-example code {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Highlight links inside example blocks so dataset URLs stand out */
+.tool-example a,
+.tool-examples a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+.tool-example a:hover,
+.tool-examples a:hover {
+  color: var(--color-accent-mid);
+}
+
+.tool-embed-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.tool-iframe-card iframe {
+  width: 100%;
+  min-height: 320px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 840px) {
+  .tool-meta-grid,
+  .tool-embed-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .tool-hero {
+    align-items: flex-start;
+  }
+
+  .tool-logo {
+    width: 84px;
+    height: 84px;
+  }
+}

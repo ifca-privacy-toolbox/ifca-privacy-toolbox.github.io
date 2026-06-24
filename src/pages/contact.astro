@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Contact | IFCA Privacy Toolbox">
+  <section class="section">
+    <div class="container" style="max-width: 560px;">
+      <p class="label">Contact</p>
+      <h1 style="font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 500; margin-bottom: 0.75rem;">
+        Get in touch
+      </h1>
+      <p style="color: var(--color-text-muted); margin-bottom: 2rem;">
+        Questions about the tools, access to the dashboards, or collaboration proposals?
+        Fill in the form and we'll get back to you.
+      </p>
+
+      <form action="https://formspree.io/f/xkolojgn" method="POST" class="contact-form">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="you@institution.edu" />
+        </div>
+        <div class="field">
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject">
+            <option value="">Select a topic</option>
+            <option>Tool question</option>
+            <option>Dashboard access</option>
+            <option>Collaboration</option>
+            <option>Bug report</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Your message..."></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary" style="width: 100%;">Send message</button>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  padding: 0.6rem 0.875rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: border-color 0.15s;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+.field textarea { resize: vertical; }
+</style>

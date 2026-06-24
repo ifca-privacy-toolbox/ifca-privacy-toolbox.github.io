@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="pyCANON | IFCA Privacy Toolbox" description="pyCANON tool page for privacy risk assessment and audit.">
+  <section class="section">
+    <div class="container tool-page">
+      <div class="tool-hero" style="margin-bottom: 0;">
+        <p class="label"></p>
+        <img 
+            src="/assets/logos/logo_pycanon.png" 
+            alt="trasgoDP logo" 
+            style="display: block; max-width: 400px; margin: 0.5rem 0 0rem;"
+        />
+        </div>
+
+      <div class="tool-meta-grid">
+        <div class="tool-card">
+          <h2>Repository overview</h2>
+          <p>
+            pyCANON is a Python library which allows the user to know the anonymity level of a dataset based on a set of quasi-identifiers (QI), and a set of sensitive attributes. In addition, it allows to check different metrics concerning privacy-utility trade-offs, re-identification and disclosure risks. 
+          </p>
+          
+        </div>
+
+        <div class="tool-links-card">
+          <h2>Quick links</h2>
+          <div class="tool-links">
+            <a class="btn btn--ghost" href="https://pycanon.readthedocs.io" target="_blank" rel="noopener">Docs</a>
+            <a class="btn btn--ghost" href="https://pypi.org/project/pycanon/" target="_blank" rel="noopener">PyPI</a>
+            <a class="btn btn--ghost" href="https://github.com/IFCA-Advanced-Computing/pycanon" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-example">
+        <h2>Usage example: Get the anonymization report</h2>
+        <pre><code>from pycanon import anonymity, report
+
+FILE_NAME = "adult.csv"
+QI = ["age", "education", "occupation", "relationship", "sex", "native-country"]
+SA = ["salary-class"]
+DATA = pd.read_csv(FILE_NAME)
+
+# Calculate k for k-anonymity:
+k = anonymity.k_anonymity(DATA, QI)
+
+# Print the anonymity report:
+report.print_report(DATA, QI, SA)
+</code></pre>
+      </div>
+      
+      <div class="tool-embed-grid">
+        <div class="tool-iframe-card">
+          <h2>Access the interactive application</h2>
+          <p>
+            The pyCANON dashboard is available at <strong>pycanon.cloud.eosc-siesta.eu</strong> and may require login to access.
+            Open it in a new tab to sign in and explore the workflow.
+          </p>
+          <a class="btn btn--primary" href="https://pycanon.cloud.eosc-siesta.eu/" target="_blank" rel="noopener">Open dashboard</a>
+          <p style="margin-top:0.75rem;">To obtain access, please <a href="#contact">contact the team</a>.</p>
+        </div>
+
+        <div class="tool-iframe-card">
+          <h2>Tutorial/h2>
+          <p>Watch a demonstration of pyCANON on YouTube.</p>
+          <iframe src="https://www.youtube.com/embed/demo-pycanon" title="pyCANON demo video" loading="lazy" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

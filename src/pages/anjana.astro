@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="anjana | IFCA Privacy Toolbox" description="anjana is a Python library for anonymizing sensitive data.">
+  <section class="section">
+    <div class="container tool-page">
+      <div class="tool-hero" style="margin-bottom: 0;">
+        <p class="label"></p>
+        <img 
+            src="/assets/logos/logo_anjana.png" 
+            alt="anjana logo" 
+            style="display: block; max-width: 400px; margin: 0.5rem 0 0rem;"
+        />
+      </div>
+
+      <div class="tool-card">
+        <h2>Description</h2>
+        <p>
+          anjana is a Python library for anonymizing sensitive data. The following anonymity techniques are implemented:
+        </p>
+        <ul>
+          <li><strong>k-anonymity</strong></li>
+          <li><strong>(α,k)-anonymity</strong></li>
+          <li><strong>ℓ-diversity</strong></li>
+          <li><strong>Entropy ℓ-diversity</strong></li>
+          <li><strong>Recursive (c,ℓ)-diversity</strong></li>
+          <li><strong>t-closeness</strong></li>
+          <li><strong>Basic β-likeness</strong></li>
+          <li><strong>Enhanced β-likeness</strong></li>
+          <li><strong>δ-disclosure privacy</strong></li>
+        </ul>
+      </div>
+
+      <div class="tool-links-card">
+        <h2>Quick links</h2>
+        <div class="tool-links">
+          <a class="btn btn--ghost" href="https://anjana.readthedocs.io" target="_blank" rel="noopener">Docs</a>
+          <a class="btn btn--ghost" href="https://pypi.org/project/anjana/" target="_blank" rel="noopener">PyPI</a>
+          <a class="btn btn--ghost" href="https://github.com/IFCA-Advanced-Computing/anjana" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+      <div class="tool-example">
+        <h2>Usage example</h2>
+        <div style="position: relative;">
+          <button
+            id="copy-btn"
+            onclick="navigator.clipboard.writeText(document.getElementById('code-block').innerText).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy', 2000); })"
+            style="position: absolute; top: 0.75rem; right: 0.75rem; font-size: 0.78rem; padding: 0.3rem 0.75rem; cursor: pointer; background: var(--color-bg-muted); border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: var(--font-sans); color: var(--color-text-muted); z-index: 1;"
+          >
+            Copy
+          </button>
+          <pre><code id="code-block" set:html={`import pandas as pd
+import anjana
+from anjana.anonymity import k_anonymity, l_diversity, t_closeness
+
+# Read and process the data
+data = pd.read_csv("adult.csv")
+data.columns = data.columns.str.strip()
+cols = [
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "sex",
+    "native-country",
+]
+for col in cols:
+    data[col] = data[col].str.strip()
+
+# Define the identifiers, quasi-identifiers and the sensitive attribute
+quasi_ident = [
+    "age",
+    "education",
+    "marital-status",
+    "occupation",
+    "sex",
+    "native-country",
+]
+ident = ["race"]
+sens_att = "salary-class"
+
+# Select the desired level of k, l and t
+k = 10
+l_div = 2
+t = 0.5
+
+# Select the suppression limit allowed
+supp_level = 50
+
+# Import the hierarchies for each quasi-identifier
+hierarchies = {
+    "age": dict(pd.read_csv("hierarchies/age.csv", header=None)),
+    "education": dict(pd.read_csv("hierarchies/education.csv", header=None)),
+    "marital-status": dict(pd.read_csv("hierarchies/marital.csv", header=None)),
+    "occupation": dict(pd.read_csv("hierarchies/occupation.csv", header=None)),
+    "sex": dict(pd.read_csv("hierarchies/sex.csv", header=None)),
+    "native-country": dict(pd.read_csv("hierarchies/country.csv", header=None)),
+}
+
+# Apply the three functions: k-anonymity, l-diversity and t-closeness
+data_anon = k_anonymity(data, ident, quasi_ident, k, supp_level, hierarchies)
+data_anon = l_diversity(
+    data_anon, ident, quasi_ident, sens_att, k, l_div, supp_level, hierarchies
+)
+data_anon = t_closeness(
+    data_anon, ident, quasi_ident, sens_att, k, t, supp_level, hierarchies
+)
+
+result = anon.fit_transform(df)
+result.to_csv('data-anonymized.csv', index=False)
+`}></code></pre>
+        </div>
+      </div>
+
+      <div class="tool-embed-grid">
+        <div class="tool-iframe-card">
+          <h2>Access the interactive application</h2>
+          <p>
+            The anjana dashboard is hosted at <strong>anjana.cloud.eosc-siesta.eu</strong> and requires login to access.
+            Open it in a new tab to sign in and explore the four-step workflow.
+          </p>
+          <a class="btn btn--primary" href="https://anjana.cloud.eosc-siesta.eu" target="_blank" rel="noopener">
+            Open dashboard
+          </a>
+          <p style="margin-top:0.75rem;">To obtain access, please <a href="#contact">contact the team</a>.</p>
+        </div>
+
+        <div class="tool-iframe-card">
+          <h2>Tutorial</h2>
+          <p>Watch a demonstration of using anjana via de dashboard.</p>
+          <iframe src="https://www.youtube.com/embed/demo-anjana" title="anjana demo video" loading="lazy" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
