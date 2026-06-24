@@ -8,28 +8,26 @@ import Base from '../layouts/Base.astro';
       <div class="tool-hero" style="margin-bottom: 0;">
         <p class="label"></p>
         <img 
-            src="/assets/logos/logo_pycanon.png" 
-            alt="trasgoDP logo" 
+            src="/assets/logos/logo_anjana.png" 
+            alt="anjana logo" 
             style="display: block; max-width: 400px; margin: 0.5rem 0 0rem;"
         />
-        </div>
+      </div>
 
-      <div class="tool-meta-grid">
-        <div class="tool-card">
-          <h2>Repository overview</h2>
-          <p>
+      <div class="tool-card">
+        <h2>Description</h2>
+        <p>
             pyCANON is a Python library which allows the user to know the anonymity level of a dataset based on a set of quasi-identifiers (QI), and a set of sensitive attributes. In addition, it allows to check different metrics concerning privacy-utility trade-offs, re-identification and disclosure risks. 
           </p>
           
         </div>
 
-        <div class="tool-links-card">
-          <h2>Quick links</h2>
-          <div class="tool-links">
-            <a class="btn btn--ghost" href="https://pycanon.readthedocs.io" target="_blank" rel="noopener">Docs</a>
-            <a class="btn btn--ghost" href="https://pypi.org/project/pycanon/" target="_blank" rel="noopener">PyPI</a>
-            <a class="btn btn--ghost" href="https://github.com/IFCA-Advanced-Computing/pycanon" target="_blank" rel="noopener">GitHub</a>
-          </div>
+      <div class="tool-links-card">
+        <h2>Quick links</h2>
+        <div class="tool-links">
+          <a class="btn btn--ghost" href="https://pycanon.readthedocs.io" target="_blank" rel="noopener">Docs</a>
+          <a class="btn btn--ghost" href="https://pypi.org/project/pycanon/" target="_blank" rel="noopener">PyPI</a>
+          <a class="btn btn--ghost" href="https://github.com/IFCA-Advanced-Computing/pycanon" target="_blank" rel="noopener">GitHub</a>
         </div>
       </div>
 
@@ -54,17 +52,19 @@ report.print_report(DATA, QI, SA)
         <div class="tool-iframe-card">
           <h2>Access the interactive application</h2>
           <p>
-            The pyCANON dashboard is available at <strong>pycanon.cloud.eosc-siesta.eu</strong> and may require login to access.
-            Open it in a new tab to sign in and explore the workflow.
+            The anjana dashboard is hosted at <strong>pycanon.cloud.eosc-siesta.eu</strong> and requires login to access.
+            Open it in a new tab to sign in and explore the four-step workflow.
           </p>
-          <a class="btn btn--primary" href="https://pycanon.cloud.eosc-siesta.eu/" target="_blank" rel="noopener">Open dashboard</a>
+          <a class="btn btn--primary" href="https://pycanon.cloud.eosc-siesta.eu" target="_blank" rel="noopener">
+            Open dashboard
+          </a>
           <p style="margin-top:0.75rem;">To obtain access, please <a href="#contact">contact the team</a>.</p>
         </div>
 
         <div class="tool-iframe-card">
-          <h2>Tutorial/h2>
-          <p>Watch a demonstration of pyCANON on YouTube.</p>
-          <iframe src="https://www.youtube.com/embed/demo-pycanon" title="pyCANON demo video" loading="lazy" allowfullscreen></iframe>
+          <h2>Tutorial</h2>
+          <p>Watch a demonstration of using pyCANON via the SIESTA dashboard.</p>
+          <iframe src="https://www.youtube.com/watch?v=TSburoBjhTU" title="pycanon demo video" loading="lazy" allowfullscreen></iframe>
         </div>
       </div>
     </div>
