@@ -5,7 +5,7 @@ interface Props {
   description: string;
   tags: string[];
   color: 'anjana' | 'pycanon' | 'trasgodp';
-  icon: string;       /* SVG path d= string */
+  icon: string;
   repo: string;
   docs: string;
   pypi: string;
@@ -14,6 +14,76 @@ interface Props {
 
 const { name, tagline, description, tags, color, icon, repo, docs, pypi, featured = false } = Astro.props;
 const route = `/${name.toLowerCase()}`;
+
+const repoMatch = repo.match(/github\.com\/([^/]+\/[^/]+)/);
+const repoPath = repoMatch ? repoMatch[1] : null;
+
+const pypiMatch = pypi.match(/pypi\.org\/project\/([^/]+)/);
+const pypiName = pypiMatch ? pypiMatch[1] : null;
+
+const ghToken = import.meta.env.GH_TOKEN ?? import.meta.env.GITHUB_TOKEN ?? '';
+const ghHeaders: Record<string, string> = {
+  'Accept': 'application/vnd.github+json',
+  ...(ghToken ? { 'Authorization': `Bearer ${ghToken}` } : {}),
+};
+
+let stars: number | null = null;
+let forks: number | null = null;
+let downloads: number | null = null;
+let version: string | null = null;
+
+if (repoPath) {
+  try {
+    const [repoRes, releaseRes, tagsRes] = await Promise.all([
+      fetch(`https://api.github.com/repos/${repoPath}`, { headers: ghHeaders }),
+      fetch(`https://api.github.com/repos/${repoPath}/releases/latest`, { headers: ghHeaders }),
+      fetch(`https://api.github.com/repos/${repoPath}/tags`, { headers: ghHeaders }),
+    ]);
+
+    if (repoRes.ok) {
+      const d = await repoRes.json();
+      stars = d.stargazers_count ?? null;
+      forks = d.forks_count ?? null;
+    }
+
+    if (releaseRes.ok) {
+      const d = await releaseRes.json();
+      if (d.tag_name) version = d.tag_name.replace(/^v/, '');
+    }
+
+    if (!version && tagsRes.ok) {
+      const d = await tagsRes.json();
+      if (Array.isArray(d) && d.length > 0) {
+        version = d[0].name?.replace(/^v/, '') ?? null;
+      }
+    }
+  } catch (_) {}
+}
+
+if (!version && pypiName) {
+  try {
+    const res = await fetch(`https://pypi.org/pypi/${pypiName}/json`);
+    if (res.ok) {
+      const d = await res.json();
+      version = d.info?.version ?? null;
+    }
+  } catch (_) {}
+}
+
+if (pypiName) {
+  try {
+    const res = await fetch(`https://pepy.tech/api/v2/projects/${pypiName}`);
+    if (res.ok) {
+      const d = await res.json();
+      downloads = d.total_downloads ?? null;
+    }
+  } catch (_) {}
+}
+
+function formatNum(n: number): string {
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+  return String(n);
+}
 ---
 
 <article class={`tool-card tool-card--${color}${featured ? ' tool-card--featured' : ''}`} role="link" tabindex="0" data-href={route} onClick="window.location.href=this.dataset.href" onKeyDown="if (event.key === 'Enter') window.location.href=this.dataset.href">
@@ -34,19 +104,50 @@ const route = `/${name.toLowerCase()}`;
     {tags.map(t => <span class={`badge badge--${color}`}>{t}</span>)}
   </div>
 
-  <div class="tool-card__links">
-    <a href={repo} class="tool-link" target="_blank" rel="noopener">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-      Repo
-    </a>
-    <a href={docs} class="tool-link" target="_blank" rel="noopener">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      Docs
-    </a>
-    <a href={pypi} class="tool-link" target="_blank" rel="noopener">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
-      PyPI
-    </a>
+  <div class="tool-card__bottom">
+    <div class="tool-card__links">
+      <a href={repo} class="tool-link" target="_blank" rel="noopener" onClick="event.stopPropagation()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        Repo
+      </a>
+      <a href={docs} class="tool-link" target="_blank" rel="noopener" onClick="event.stopPropagation()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Docs
+      </a>
+      <a href={pypi} class="tool-link" target="_blank" rel="noopener" onClick="event.stopPropagation()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
+        PyPI
+      </a>
+    </div>
+
+    {(version !== null || stars !== null || forks !== null || downloads !== null) && (
+      <div class="tool-card__stats" aria-label="Stats">
+        {version && (
+          <span class="tool-stat">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            v{version}
+          </span>
+        )}
+        {stars !== null && (
+          <span class="tool-stat">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            {formatNum(stars)}
+          </span>
+        )}
+        {forks !== null && (
+          <span class="tool-stat">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9M12 15v-3"/></svg>
+            {formatNum(forks)}
+          </span>
+        )}
+        {downloads !== null && (
+          <span class="tool-stat">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            {formatNum(downloads)}
+          </span>
+        )}
+      </div>
+    )}
   </div>
 </article>
 
@@ -105,12 +206,41 @@ const route = `/${name.toLowerCase()}`;
   flex-wrap: wrap;
   gap: 0.4rem;
 }
+
+.tool-card__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--color-border);
+}
+
 .tool-card__links {
   display: flex;
   gap: 1.25rem;
-  padding-top: 0.25rem;
-  border-top: 1px solid var(--color-border);
+  padding-top: 0.75rem;
+  padding-bottom: 0.5rem;
 }
+
+.tool-card__stats {
+  display: flex;
+  gap: 1rem;
+  padding-top: 0.4rem;
+  border-top: 1px dashed var(--color-border);
+}
+
+.tool-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-faint);
+}
+.tool-stat svg {
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
 .tool-link {
   display: inline-flex;
   align-items: center;

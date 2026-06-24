@@ -9,7 +9,7 @@ const tools = [
     name: 'anjana',
     tagline: 'Data anonymization',
     description:
-      'Apply nine anonymization techniques, from k-anonymity, l-diversity, t-closeness to β-likeness and δ-disclosure privacy among others to tabular datasets. Designed for privacy-compliant data sharing in research and industry.',
+      'Apply nine anonymmization techniques, from k-anonymity, l-diversity, t-closeness to β-likeness and δ-disclosure privacy among others to tabular datasets. Designed for privacy-compliant data sharing in research and industry.',
     tags: ['k-anonymity', 'l-diversity', 't-closeness', 'β-likeness', 'δ-disclosure privacy'],
     color: 'anjana' as const,
     icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
@@ -57,6 +57,8 @@ const projects = [
     url: 'https://eosc-siesta.eu/',
     tools: ['anjana', 'pycanon', 'trasgodp'] as const,
     funder: 'EU Horizon Europe',
+    cordis: 'https://cordis.europa.eu/project/id/101131957',
+    dashboard: 'https://dashboard.cloud.eosc-siesta.eu'
   },
   {
     name: 'AI4EOSC',
@@ -64,6 +66,8 @@ const projects = [
     url: 'https://origin.ai4eosc.eu',
     tools: ['pycanon'] as const,
     funder: 'EU Horizon Europe',
+    cordis: 'https://cordis.europa.eu/project/id/101058593',
+    dashboard: 'https://dashboard.cloud.ai4eosc.eu'
   },
   {
     name: 'EOSC ARENA',
@@ -71,6 +75,7 @@ const projects = [
     url: 'https://arena.ai4eosc.eu',
     tools: ['anjana', 'pycanon', 'trasgodp'] as const,
     funder: 'EU Horizon Europe',
+    cordis: 'https://cordis.europa.eu/project/id/101058593'
   },
 ];
 
@@ -225,27 +230,27 @@ const features = [
       <p class="label">How it fits together</p>
       <h2 class="section__title">A complete privacy pipeline</h2>
       <p class="section__sub">
-        The three tools are designed to work in sequence,
+        The three tools are designed to work independently, but in a complementary way,
         covering the full lifecycle of privacy-preserving data publishing.
       </p>
 
       <div class="pipeline">
         <div class="pipeline__step pipeline__step--anjana">
           <span class="pipeline__num">01</span>
-          <strong>Anonymize or apply DP</strong>
-          <span>Apply anonymization techniques with <code>anjana</code> or local-DP or metric-privacy with <code>trasgoDP</code></span>
+          <strong>Anonymize or sanitize</strong>
+          <span>Apply anonymization techniques to tabular data using <code>anjana</code> or sanitize the data using local-differential privacy mechanisms or metric-privacy notions with <code>trasgoDP</code></span>
         </div>
         <div class="pipeline__arrow" aria-hidden="true">→</div>
         <div class="pipeline__step pipeline__step--pycanon">
           <span class="pipeline__num">02</span>
           <strong>Verify the privacy level</strong>
-          <span>DP provides mathematical guaranteen on the level of privacy, and you can check the level of anonymity using <code>pyCANON</code></span>
+          <span>Differential privacy (DP) provides mathematical guarantees on the level of privacy according to the privacy budget, and the level of anonymity can be check with <code>pyCANON</code></span>
         </div>
         <div class="pipeline__arrow" aria-hidden="true">→</div>
         <div class="pipeline__step pipeline__step--neutral">
           <span class="pipeline__num">03</span>
           <strong>Check risks and utility</strong>
-          <span>Check privacy-utility trade-off metrics, re-identification and disclosure risks using <code>pyCANON</code> or <code>trasgoDP</code>.</span>
+          <span>Check privacy-utility trade-off metrics, re-identification and disclosure risks using <code>pyCANON</code> for anonymized data. For data sanitized with <code>trasgoDP</code> check divergences and correlation loss</span>
         </div>
       </div>
 
@@ -334,7 +339,8 @@ const features = [
           at the
           <a href="https://ifca.unican.es" target="_blank" rel="noopener">
             Institute of Physics of Cantabria (IFCA)
-          </a>, a joint centre of CSIC and the University of Cantabria.
+          </a>,
+          a joint centre of CSIC and the University of Cantabria.
         </p>
         <p style="margin-top: 1rem; color: var(--color-text-muted); font-size: 0.9rem;">
           If you use these tools in your research, please cite the corresponding publications.
