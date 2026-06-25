@@ -39,7 +39,14 @@ import Base from '../layouts/Base.astro';
           <div class="tool-example">
             <h2>Example 1: Local DP on general attributes</h2>
             <p>Apply DP to the <a href="https://archive.ics.uci.edu/dataset/2/adult" target="_blank" rel="noopener">adult dataset</a> with the Laplace mechanism for <code>age</code> and the Exponential mechanism for <code>workclass</code>:</p>
-            <pre><code>import pandas as pd
+            <div style="position: relative;">
+              <button
+                onclick="const code = this.nextElementSibling.querySelector('code'); navigator.clipboard.writeText(code.innerText).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy', 2000); })"
+                style="position: absolute; top: 0.75rem; right: 0.75rem; font-size: 0.78rem; padding: 0.3rem 0.75rem; cursor: pointer; background: var(--color-bg-muted); border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: var(--font-sans); color: var(--color-text-muted); z-index: 1;"
+              >
+                Copy
+              </button>
+              <pre><code set:html={`import pandas as pd
 from trasgodp.numerical import dp_clip_laplace
 from trasgodp.categorical import dp_exponential
 
@@ -66,13 +73,21 @@ df = dp_clip_laplace(data, column_num, epsilon1, new_column=True)
 column_cat = "workclass"
 epsilon2 = 5
 df = dp_exponential(data, column_cat, epsilon2, new_column=True)
-  </code></pre>
+`}></code></pre>
+            </div>
           </div>
 
           <div class="tool-example">
             <h2>Example 2: Metric privacy on location data</h2>
             <p>Apply metric privacy to the <a href="https://www.kaggle.com/datasets/warcoder/earthquake-dataset" target="_blank" rel="noopener">earthquake dataset</a> and plot the interactive map:</p>
-            <pre><code>import pandas as pd
+            <div style="position: relative;">
+              <button
+                onclick="const code = this.nextElementSibling.querySelector('code'); navigator.clipboard.writeText(code.innerText).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy', 2000); })"
+                style="position: absolute; top: 0.75rem; right: 0.75rem; font-size: 0.78rem; padding: 0.3rem 0.75rem; cursor: pointer; background: var(--color-bg-muted); border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: var(--font-sans); color: var(--color-text-muted); z-index: 1;"
+              >
+                Copy
+              </button>
+              <pre><code set:html={`import pandas as pd
 from trasgodp.geoindis import metric_privacy, plot_metric_dp_map
 
 # Read the data
@@ -86,16 +101,18 @@ data_priv = metric_privacy(data, column_lat, column_lon, epsilon, new_cols=True)
 
 # Plot and save the map:
 plot_metric_dp_map(data_priv, column_lat, column_lon, save_file="example_map.html")
-  </code></pre>
+`}></code></pre>
+            </div>
           </div>
-        </div>
 
-        <div class="tool-card" style="grid-column: 1 / -1;">
-          <h2>Interactive map</h2>
-          <p>Resulting interactive map (embedded from raw.githack):</p>
-          <iframe src="https://raw.githack.com/IFCA-Advanced-Computing/trasgoDP/main/examples/example_map.html" title="trasgoDP example map" loading="lazy" style="width: 100%; height: 500px; border-radius: 8px;"></iframe>
-          <p style="margin-top:0.75rem;"><a href="https://raw.githack.com/IFCA-Advanced-Computing/trasgoDP/main/examples/example_map.html" target="_blank" rel="noopener">Open map in new tab</a></p>
-        </div>
+          <div class="tool-card" style="grid-column: 1 / -1;">
+            <h2>Interactive map</h2>
+            <p>Resulting interactive map (embedded from raw.githack):</p>
+            <iframe src="https://raw.githack.com/IFCA-Advanced-Computing/trasgoDP/main/examples/example_map.html" title="trasgoDP example map" loading="lazy" style="width: 100%; height: 500px; border-radius: 8px;"></iframe>
+            <p style="margin-top:0.75rem;"><a href="https://raw.githack.com/IFCA-Advanced-Computing/trasgoDP/main/examples/example_map.html" target="_blank" rel="noopener">Open map in new tab</a></p>
+          </div>
+
+      </div>
 
       <div class="tool-card">
         <h2>Access the interactive application</h2>

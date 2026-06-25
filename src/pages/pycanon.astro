@@ -33,7 +33,15 @@ import Base from '../layouts/Base.astro';
 
       <div class="tool-example">
         <h2>Usage example: Get the anonymization report</h2>
-        <pre><code>from pycanon import anonymity, report
+        <div style="position: relative;">
+          <button
+            id="copy-btn"
+            onclick="navigator.clipboard.writeText(document.getElementById('code-block').innerText).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy', 2000); })"
+            style="position: absolute; top: 0.75rem; right: 0.75rem; font-size: 0.78rem; padding: 0.3rem 0.75rem; cursor: pointer; background: var(--color-bg-muted); border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: var(--font-sans); color: var(--color-text-muted); z-index: 1;"
+          >
+            Copy
+          </button>
+          <pre><code id="code-block" set:html={`from pycanon import anonymity, report
 
 FILE_NAME = "adult.csv"
 QI = ["age", "education", "occupation", "relationship", "sex", "native-country"]
@@ -45,7 +53,8 @@ k = anonymity.k_anonymity(DATA, QI)
 
 # Print the anonymity report:
 report.print_report(DATA, QI, SA)
-</code></pre>
+`}></code></pre>
+      </div>
       </div>
       
       <div class="tool-embed-grid">

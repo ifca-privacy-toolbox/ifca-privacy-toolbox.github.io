@@ -3,7 +3,8 @@
 html {
   scroll-behavior: smooth;
   min-height: 100%;
-  background: linear-gradient(to bottom, #ffffff 0%, #d8e8ff 80%);
+  /* Gradient recorriendo los 3 colores de las herramientas, muy desaturado */
+  background: linear-gradient(135deg, #e8f5f1 0%, #ededfc 50%, #fdf3e7 100%);
 }
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -13,81 +14,84 @@ a { color: inherit; text-decoration: none; }
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  --color-bg:          #f8fbff;
-  --color-bg-subtle:   #edf5ff;
-  --color-bg-muted:    #dbeafe;
+  /* Privacy Gradient light — warm white, glassmorphism cards */
+  --color-bg:          rgba(255,255,255,0.72);
+  --color-bg-subtle:   rgba(255,255,255,0.55);
+  --color-bg-muted:    rgba(255,255,255,0.38);
 
-  --color-text:        #0f172a;
-  --color-text-muted:  #475569;
-  --color-text-faint:  #64748b;
+  --color-text:        #111827;
+  --color-text-muted:  #4b5563;
+  --color-text-faint:  #6b7280;
 
   --color-cta-bg:      var(--color-text);
-  --color-cta-text:    var(--color-bg);
+  --color-cta-text:    #fff;
   --color-cta-border:  rgba(255,255,255,0.28);
   --color-cta-ghost:   rgba(255,255,255,0.85);
 
-  --color-border:      rgba(15,23,42,0.08);
-  --color-border-strong: rgba(15,23,42,0.16);
-  --color-nav-bg:      rgba(248,251,255,0.92);
+  --color-border:      rgba(17,24,39,0.08);
+  --color-border-strong: rgba(17,24,39,0.15);
+  --color-nav-bg:      rgba(255,255,255,0.75);
 
-  /* accent — blue inspired, privacy feel */
-  --color-accent:      #2563eb;
-  --color-accent-light:#eff6ff;
-  --color-accent-mid:  #1d4ed8;
+  /* Accent — violet, middle of the gradient journey */
+  --color-accent:      #6d5ae6;
+  --color-accent-light:#ede9fe;
+  --color-accent-mid:  #5340d4;
 
   /* tool palette */
   --color-anjana:      #1a6b5c;
-  --color-anjana-light:#e1f5ee;
+  --color-anjana-light:#d1fae5;
   --color-pycanon:     #534ab7;
-  --color-pycanon-light:#eeedfe;
+  --color-pycanon-light:#ede9fe;
   --color-trasgodp:    #854f0b;
-  --color-trasgodp-light:#faeeda;
+  --color-trasgodp-light:#fef3c7;
 
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-xl: 24px;
 
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-sm: 0 2px 8px rgba(109,90,230,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 8px 32px rgba(109,90,230,0.10), 0 2px 8px rgba(0,0,0,0.06);
 
   --max-w: 1100px;
   --section-py: 5rem;
 }
 
 [data-theme="dark"] {
-  --color-bg:          #071628;
-  --color-bg-subtle:   #0b2150;
-  --color-bg-muted:    #05132e;
+  --color-bg:          rgba(15,12,30,0.82);
+  --color-bg-subtle:   rgba(3, 24, 51, 0.75);
+  --color-bg-muted:    rgba(25, 20, 63, 0.65);
 
-  --color-text:        #eff6ff;
-  --color-text-muted:  #cbd5e1;
-  --color-text-faint:  #94a3b8;
+  --color-text:        #f1eeff;
+  --color-text-muted:  #b0a8d4;
+  --color-text-faint:  #7a7299;
 
   --color-border:      rgba(255,255,255,0.08);
-  --color-border-strong: rgba(255,255,255,0.16);
-  --color-nav-bg:      rgba(10,25,56,0.92);
+  --color-border-strong: rgba(255,255,255,0.15);
+  --color-nav-bg:      rgba(8, 22, 15, 0.88);
 
-  --color-accent:      #60a5fa;
-  --color-accent-light:#1e3a8a;
-  --color-accent-mid:  #3b82f6;
+  --color-accent:      hsl(253, 14%, 60%);
+  --color-accent-light:#2e1065;
+  --color-accent-mid:  #8b5cf6;
 
-  --color-anjana:      #58b79c;
-  --color-anjana-light:#143d35;
-  --color-pycanon:     #8d7ce0;
-  --color-pycanon-light:#2d2a4f;
-  --color-trasgodp:    #d99f5d;
-  --color-trasgodp-light:#3c2f18;
+  --color-anjana:      #34d399;
+  --color-anjana-light:#064e3b;
+  --color-pycanon:     #a78bfa;
+  --color-pycanon-light:#2e1065;
+  --color-trasgodp:    #fbbf24;
+  --color-trasgodp-light:#451a03;
 
   --color-cta-bg:      var(--color-bg);
   --color-cta-text:    var(--color-text);
-  --color-cta-border:  rgba(255,255,255,0.25);
+  --color-cta-border:  rgba(255,255,255,0.18);
   --color-cta-ghost:   rgba(255,255,255,0.85);
+
+  --shadow-md: 0 8px 32px rgba(167,139,250,0.12), 0 2px 8px rgba(0,0,0,0.4);
 }
 
 [data-theme="dark"] html,
 [data-theme="dark"] {
-  background: linear-gradient(to bottom, #080810 0%, #0d0a1f 100%);
+  background: linear-gradient(135deg, #071a14 0%, #0d0b1e 50%, #1a0f05 100%);
 }
 
 /* ── Base ────────────────────────────────────────── */
@@ -140,13 +144,14 @@ h1, h2, h3, h4 {
 .btn:active { transform: translateY(0); }
 
 .btn--primary {
-  background: var(--color-text);
-  color: var(--color-bg);
+  background: var(--color-accent);
+  color: #fff;
 }
 .btn--ghost {
-  background: transparent;
+  background: rgba(255,255,255,0.4);
   color: var(--color-text);
   border-color: var(--color-border-strong);
+  backdrop-filter: blur(6px);
 }
 .btn--accent {
   background: var(--color-accent);
@@ -189,6 +194,8 @@ h1, h2, h3, h4 {
   color: var(--color-text-faint);
   margin-bottom: 0.5rem;
 }
+
+/* ── Tool page layout ────────────────────────────── */
 .tool-page {
   display: grid;
   gap: 2rem;
@@ -228,17 +235,20 @@ h1, h2, h3, h4 {
   gap: 1.5rem;
 }
 
+/* Glassmorphism cards */
 .tool-card,
 .tool-links-card,
 .tool-example,
 .tool-iframe-card {
-  background: var(--color-bg-subtle);
+  background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-/* Ensure list bullets inside tool cards are aligned and contained */
 .tool-card ul {
   margin: 0.75rem 0 0;
   padding-left: 1.25rem;
@@ -263,11 +273,21 @@ h1, h2, h3, h4 {
 
 .tool-example pre {
   margin-top: 1rem;
-  background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 1rem;
   overflow-x: auto;
+  backdrop-filter: blur(6px);
+}
+
+/* Light */
+.tool-example pre {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+/* Dark */
+[data-theme="dark"] .tool-example pre {
+  background: rgba(16, 17, 48, 0.75);
 }
 
 .tool-example code {
@@ -276,7 +296,6 @@ h1, h2, h3, h4 {
   line-height: 1.6;
 }
 
-/* Highlight links inside example blocks so dataset URLs stand out */
 .tool-example a,
 .tool-examples a {
   color: var(--color-accent);
@@ -300,6 +319,12 @@ h1, h2, h3, h4 {
   border-radius: var(--radius-lg);
 }
 
+.tool-examples {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
 @media (max-width: 840px) {
   .tool-meta-grid,
   .tool-embed-grid {
@@ -308,12 +333,9 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 640px) {
-  .tool-hero {
-    align-items: flex-start;
-  }
-
-  .tool-logo {
-    width: 84px;
-    height: 84px;
-  }
+  .tool-hero { align-items: flex-start; }
+  .tool-logo { width: 84px; height: 84px; }
+  .tool-example pre { font-size: 0.8rem; }
+  .tool-example pre code { white-space: pre-wrap; word-break: break-word; }
+  .tool-card iframe { height: 300px; }
 }

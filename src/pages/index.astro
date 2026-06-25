@@ -75,7 +75,7 @@ const projects = [
     url: 'https://arena.ai4eosc.eu',
     tools: ['anjana', 'pycanon', 'trasgodp'] as const,
     funder: 'EU Horizon Europe',
-    cordis: 'https://cordis.europa.eu/project/id/101058593'
+    cordis: 'https://cordis.europa.eu/project/id/101292597'
   },
 ];
 
@@ -198,12 +198,8 @@ const features = [
     </div>
 
     <div class="hero__background" aria-hidden="true">
-      <div class="hero__bg-squares">
-        <div class="hero__bg-square hero__bg-square--one"></div>
-        <div class="hero__bg-square hero__bg-square--two"></div>
-        <div class="hero__bg-square hero__bg-square--three"></div>
-      </div>
-    </div>
+  <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+</div>
   </section>
 
   <hr class="divider" />
@@ -356,7 +352,44 @@ const features = [
     </div>
   </section>
 
-</Base>
+<script>
+const canvas = document.getElementById('hero-canvas');
+const ctx = canvas.getContext('2d');
+const chars = ['A','B','1','9','M','F','€','#','J','4','2','0','█','░','▓','*','?'];
+let cells = [];
+
+function resize() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const cols = Math.floor(canvas.width/28);
+  const rows = Math.floor(canvas.height/22);
+  cells = Array.from({length:cols*rows}, (_,i) => ({
+    x: (i%cols)*28+14, y: Math.floor(i/cols)*22+14,
+    char: chars[Math.floor(Math.random()*chars.length)],
+    masked: false,
+    t: Math.random()*Math.PI*2,
+    speed: 0.003+Math.random()*0.004,
+  }));
+}
+
+function draw(t) {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.font = '11px JetBrains Mono, monospace';
+  cells.forEach(c => {
+    c.masked = Math.sin(t*c.speed + c.t) > 0.1;
+    const alpha = 0.15 + 0.25*Math.abs(Math.sin(t*c.speed+c.t));
+    ctx.fillStyle = c.masked
+      ? `rgba(80,160,130,${alpha})`
+      : `rgba(180,100,100,${alpha*0.6})`;
+    ctx.fillText(c.masked ? '█' : c.char, c.x, c.y);
+  });
+  requestAnimationFrame(draw);
+}
+
+window.addEventListener('resize', resize);
+resize();
+requestAnimationFrame(draw);
+</script>
 
 <script>
   const copyButton = document.getElementById('copy-install');
@@ -694,7 +727,7 @@ const features = [
 .about a { color: var(--color-accent); }
 .about__logos {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr;
+  grid-template-columns: 1fr 1.8fr 2fr 0.8fr;
   gap: 1rem;
   align-items: center;
   justify-items: center;
@@ -717,4 +750,6 @@ const features = [
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
+#hero-canvas { opacity: 0.45; }
+[data-theme="dark"] #hero-canvas { opacity: 0.6; }
 </style>
